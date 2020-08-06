@@ -1,0 +1,38 @@
+{% load socialaccount %}
+<html>
+  <head>
+    <title>Google Registration</title>
+  </head>
+  <body>
+  <script>
+    function doFunction() {
+      const Http = new XMLHttpRequest();
+      const url='http://localhost:8880/api/get_token';
+      Http.open("GET", url);
+      Http.send();
+      Http.onreadystatechange = (e) => {
+        console.log(Http.responseText);
+        document.getElementById("token").innerHTML = Http.responseText;
+      }
+    }
+  </script>
+  <h1>My Google Login Project</h1>
+  {% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }} !</p>
+
+  {% else %}
+  <h1>My Google Login Project</h1>
+  <a href="{% provider_login_url 'google' %}">Login with Google</a>
+  {% endif %}
+
+
+
+  <a href="accounts/logout"><h2>Logout</h2></a>
+
+  <input id="clickMe" type="button" value="Get token!" onclick="doFunction();" />
+  <h4 id="token"></h4>
+
+
+
+  </body>
+</html>
